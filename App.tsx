@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, Switch } from 'react-native';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { createGlobalStyles } from './src/styles/global';
 
-export default function App() {
+// The CalculatorScreen is where you use the theme context
+const CalculatorScreen = () => {
+  const { isDarkMode, toggleTheme } = useTheme()!;  // Access the theme and toggle function from the context
+  const styles = createGlobalStyles(isDarkMode);   // Apply styles based on the theme
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Switch
+        value={isDarkMode}
+        onValueChange={toggleTheme}
+      />
     </View>
+  );
+};
+
+// The App component wraps everything in ThemeProvider
+export default function App() {
+  return (
+    <ThemeProvider>
+      <CalculatorScreen />
+    </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
