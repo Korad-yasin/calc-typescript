@@ -1,22 +1,34 @@
 import React from 'react';
-import { View, Switch } from 'react-native';
+import { View, Switch, SafeAreaView } from 'react-native';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { createGlobalStyles } from './src/styles/global';
+import Keyboard from './src/componets/Keyboard';
 
-// The CalculatorScreen is where you use the theme context
+
 const CalculatorScreen = () => {
-  const { isDarkMode, toggleTheme } = useTheme()!;  // Access the theme and toggle function from the context
-  const styles = createGlobalStyles(isDarkMode);   // Apply styles based on the theme
+  const { isDarkMode, toggleTheme } = useTheme()!;  
+  const Styles = createGlobalStyles(isDarkMode);   
 
   return (
-    <View style={styles.container}>
-      <Switch
-        value={isDarkMode}
-        onValueChange={toggleTheme}
-      />
-    </View>
+    <SafeAreaView style={Styles.safeArea}>
+        <View style={Styles.container}>
+          <View style={Styles.switchContainter}>
+            <Switch
+               value={isDarkMode}
+               onValueChange={toggleTheme}
+            />
+          </View>
+          <Keyboard 
+          />
+       </View>
+
+    </SafeAreaView>
+       
+
+    
   );
 };
+
 
 // The App component wraps everything in ThemeProvider
 export default function App() {
